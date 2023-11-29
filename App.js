@@ -1,9 +1,10 @@
+import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, View} from "react-native";
-import Login from './src/Componentes/Login';  
-import Menu from "./src/Componentes/Menu.js";
-import Busqueda from "./src/Componentes/Busqueda.js";
-import Plato from "./src/Componentes/Plato.js";
+import { StyleSheet, View } from "react-native";
+import Login from "./src/Componentes/Login";
+import Menu from "./src/Componentes/Menu";
+import Busqueda from "./src/Componentes/Busqueda";
+import Plato from "./src/Componentes/Plato";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -11,21 +12,21 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <View>
+    <View style={styles.container}>
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen
+          <Stack.Screen
             name="Login"
             component={Login}
             options={{ title: "Login" }}
           />
-        <Stack.Screen
+          <Stack.Screen
             name="Busqueda"
             component={Busqueda}
             options={{ title: "Busqueda de Platos" }}
           />
           <Stack.Screen
-            name="Home"
+            name="Menu"
             component={Menu}
             options={{ title: "Menu" }}
           />
@@ -34,12 +35,10 @@ export default function App() {
             component={Plato}
             options={{ title: "Plato" }}
           />
-          
         </Stack.Navigator>
       </NavigationContainer>
       <StatusBar style="auto" />
-      </View>
-    
+    </View>
   );
 }
 
@@ -49,5 +48,5 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-  }
+  },
 });

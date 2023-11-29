@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Text, StyleSheet, SafeAreaView } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, StyleSheet } from "react-native";
 import axios from "axios";
 
 const Login = ({ navigation }) => {
@@ -17,16 +17,15 @@ const Login = ({ navigation }) => {
       return;
     }
 
-    
-      axios.post("http://challenge-react.alkemy.org/", {
+    axios
+      .post("http://challenge-react.alkemy.org/", {
         email,
         password,
       })
       .then((res) => {
         if (res.status === 200) {
           setLoading(false);
-          
-          navigation.navigate("Menu"); 
+          navigation.navigate("Menu");
         } else {
           setLoading(false);
           setError(res.data.message);
@@ -39,7 +38,7 @@ const Login = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <TextInput
         placeholder="Email"
         value={email}
@@ -53,13 +52,11 @@ const Login = ({ navigation }) => {
         secureTextEntry
         style={styles.input}
       />
-      <Button
-        title="Iniciar Sesión"
-        onPress={handleSubmit}
-        disabled={loading}
-      />
+      <TouchableOpacity style={styles.button} onPress={handleSubmit} disabled={loading}>
+        <Text style={styles.buttonText}>Iniciar Sesión</Text>
+      </TouchableOpacity>
       {error && <Text style={styles.error}>{error}</Text>}
-    </SafeAreaView>
+    </View>
   );
 };
 
@@ -68,18 +65,34 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    paddingHorizontal: 20,
   },
   input: {
-    height: 40,
+    height: 50,
     borderColor: "gray",
     borderWidth: 1,
-    marginBottom: 10,
-    paddingHorizontal: 10,
-    width: "80%",
+    marginBottom: 20,
+    paddingHorizontal: 30,
+    fontSize: 16,
+    color: "#000", 
+  },
+  button: {
+    backgroundColor: "#007BFF",
+    paddingVertical: 10,
+    paddingHorizontal: 70,
+    borderRadius: 10,
+  },
+  buttonText: {
+    color: "#fff",
+    textAlign: "center",
+    fontSize: 18,
+    fontWeight: "bold",
   },
   error: {
+    width:150,
     color: "red",
-    marginTop: 10,
+    marginTop: 20,
+    fontSize: 16,
   },
 });
 
