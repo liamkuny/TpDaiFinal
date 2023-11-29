@@ -47,7 +47,7 @@ const Busqueda = ({ navigation, route }) => {
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => agregarAlMenu(item)}>
             <View style={styles.resultadoItem}>
-              <Text>{item.title}</Text>
+              <Text style={styles.resultadoItemText}>{item.title}</Text>
             </View>
           </TouchableOpacity>
         )}
@@ -64,6 +64,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   titulo: {
+    width: 200,
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
@@ -73,16 +74,25 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     marginBottom: 10,
-    paddingHorizontal: 15,
-    width: "80%",
+    paddingHorizontal: 50,
     fontSize: 16,
   },
   resultadoItem: {
-    borderColor: "gray",
-    borderWidth: 1,
-    padding: 10,
-    marginBottom: 10,
-    width: "80%",
+    marginTop:20,
+    borderColor: "#ccc",
+    borderWidth: 2,
+    borderRadius: 10,
+    padding: 20,
+    marginBottom: 20,
+    width: 700,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#f9f9f9",
+  },
+  resultadoItemText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
   },
 });
 

@@ -31,7 +31,7 @@ const Menu = ({ navigation }) => {
   };
 
   const verDetalle = (plato) => {
-    navigation.navigate("DetallePlato", { plato });
+    navigation.navigate("Plato", { plato });
   };
 
   const irABusqueda = () => {
