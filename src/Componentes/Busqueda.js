@@ -1,34 +1,16 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, Button, FlatList, TouchableOpacity, StyleSheet } from "react-native";
-import axios from "axios";
+import { useMenu } from "../context/MenuContext";
 
-const Busqueda = ({ navigation, route }) => {
+const Busqueda = ({}) => {
+  const { buscarPlatos, agregarAlMenu } = useMenu();
   const [filtro, setFiltro] = useState("");
   const [resultados, setResultados] = useState([]);
 
-  const buscarPlatos = () => {
-    if (filtro.length > 2) {
-      axios
-        .get("https://api.spoonacular.com/recipes/complexSearch", {
-          params: {
-            apiKey: "1fcffc9826e745be90f1f569128f1a5c", 
-            query: filtro,
-          },
-        })
-        .then((response) => {
-          setResultados(response.data.results);
-        })
-        .catch((error) => {
-          console.error("Error al buscar platos:", error);
-        });
-    } else {
-      setResultados([]);
-    }
-  };
-
-  const agregarAlMenu = (plato) => { 
-    route.params.agregarAlMenu(plato);
-    navigation.goBack();
+  const handleBuscarPlatos = async () => {
+    const resultados = await buscarPlatos(filtro);
+    setResultados(resultados);
+    
   };
 
   return (
@@ -40,16 +22,17 @@ const Busqueda = ({ navigation, route }) => {
         onChangeText={(text) => setFiltro(text)}
         style={styles.input}
       />
-      <Button title="Buscar" onPress={buscarPlatos} />
+      <Button title="Buscar" onPress={handleBuscarPlatos} />
       <FlatList
         data={resultados}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => agregarAlMenu(item)}>
-            <View style={styles.resultadoItem}>
-              <Text style={styles.resultadoItemText}>{item.title}</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={styles.resultadoItem}>
+            <Text style={styles.resultadoItemText}>{item.title}</Text>
+            <TouchableOpacity onPress={() => agregarAlMenu(item)}>
+              <Text style={styles.agregarButton}>Agregar al Menú</Text>
+            </TouchableOpacity>
+          </View>
         )}
       />
     </View>
@@ -78,13 +61,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   resultadoItem: {
-    marginTop:20,
+    marginTop: 20,
     borderColor: "#ccc",
     borderWidth: 2,
     borderRadius: 10,
     padding: 20,
     marginBottom: 20,
-    width: 700,
+    width: 300,
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#f9f9f9",
@@ -93,6 +76,11 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     color: "#333",
+  },
+  agregarButton: {
+    marginTop: 10,
+    color: "#007BFF",
+    fontSize: 16,
   },
 });
 
