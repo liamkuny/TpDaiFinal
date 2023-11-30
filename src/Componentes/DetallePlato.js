@@ -9,7 +9,7 @@ const DetallePlato = ({ route }) => {
     <View style={styles.container}>
       <Text style={styles.titulo}>{plato.title}</Text>
       <Image source={{ uri: plato.image }} style={styles.imagen} />
-      <Text style={styles.info}>Precio: ${plato.price}</Text>
+      <Text style={styles.info}>Precio: ${plato.pricePerServing}</Text>
       <Text style={styles.info}>Health Score: {plato.healthScore}</Text>
       <Text style={styles.info}>{plato.vegan ? "Vegano" : "No Vegano"}</Text>
     </View>

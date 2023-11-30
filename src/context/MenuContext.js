@@ -13,7 +13,7 @@ export const MenuProvider = ({ children }) => {
   }, [menu]);
 
   const agregarAlMenu = (plato) => {
-    if (menu.length < 4 && (plato.vegan ? contarVeganos() < 2 : contarNoVeganos() < 2)) {
+    if ((plato.vegan? contarVeganos() < 2 : contarNoVeganos() < 2)) {
       setMenu([...menu, plato]);
       actualizarEstadisticas();
     } else {
@@ -32,8 +32,8 @@ export const MenuProvider = ({ children }) => {
     let totalHealthScore = 0;
 
     menu.forEach((plato) => {
-      acumulado += plato.price || 0; 
-      totalHealthScore += plato.healthScore || 0;
+      acumulado += plato.pricePerServing ; 
+      totalHealthScore += plato.healthScore;
     });
 
     const promedio = menu.length > 0 ? totalHealthScore / menu.length : 0;
@@ -55,11 +55,25 @@ export const MenuProvider = ({ children }) => {
       if (filtro.length > 2) {
         const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
           params: {
-            apiKey: "ef433cdbfaa44285a17ae30f515afcc8",
+            apiKey: "1fcffc9826e745be90f1f569128f1a5c",
             query: filtro,
           },
         });
-        return response.data.results;
+        const platosConDetalles = await Promise.all(
+          response.data.results.map(async (plato) => {
+            const detallePlato = await axios.get(
+              `https://api.spoonacular.com/recipes/${plato.id}/information`,
+              {
+                params: {
+                  apiKey: "1fcffc9826e745be90f1f569128f1a5c",
+                },
+              }
+            );
+            return detallePlato.data;
+          })
+        );
+  
+        return platosConDetalles;
       } else {
         return [];
       }
@@ -68,6 +82,7 @@ export const MenuProvider = ({ children }) => {
       return [];
     }
   };
+  
 
   return (
     <MenuContext.Provider
