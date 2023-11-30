@@ -13,7 +13,8 @@ export const MenuProvider = ({ children }) => {
   }, [menu]);
 
   const agregarAlMenu = (plato) => {
-    if ((plato.vegan? contarVeganos() < 2 : contarNoVeganos() < 2)) {
+    const platoExistente = menu.find((p) => p.id === plato.id);
+    if ((plato.vegan? contarVeganos() < 2 : contarNoVeganos() < 2) & !platoExistente) {
       setMenu([...menu, plato]);
       actualizarEstadisticas();
     } else {
