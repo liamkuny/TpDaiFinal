@@ -32,7 +32,7 @@ export const MenuProvider = ({ children }) => {
     let totalHealthScore = 0;
 
     menu.forEach((plato) => {
-      acumulado += plato.pricePerServing || 0; 
+      acumulado += plato.price || 0; 
       totalHealthScore += plato.healthScore || 0;
     });
 
