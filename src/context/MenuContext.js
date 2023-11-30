@@ -13,7 +13,7 @@ export const MenuProvider = ({ children }) => {
   }, [menu]);
 
   const agregarAlMenu = (plato) => {
-    if (menu.length < 2 && (plato.vegan ? contarVeganos() < 2 : contarNoVeganos() < 2)) {
+    if (menu.length < 4 && (plato.vegan ? contarVeganos() < 2 : contarNoVeganos() < 2)) {
       setMenu([...menu, plato]);
       actualizarEstadisticas();
     } else {
@@ -52,7 +52,7 @@ export const MenuProvider = ({ children }) => {
 
   const buscarPlatos = async (filtro) => {
     try {
-      if (filtro.length > 4) {
+      if (filtro.length > 2) {
         const response = await axios.get("https://api.spoonacular.com/recipes/complexSearch", {
           params: {
             apiKey: "ef433cdbfaa44285a17ae30f515afcc8",

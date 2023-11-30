@@ -4,6 +4,7 @@ import { useMenu } from "../context/MenuContext";
 
 const Menu = ({ navigation }) => {
   const { menu, precioAcumulado, healthScorePromedio, eliminarDelMenu } = useMenu();
+  console.log(menu)
 
   return (
     <View style={styles.container}>
@@ -59,7 +60,7 @@ const styles = StyleSheet.create({
     padding: 10,
     fontSize: 16,
     marginBottom: 10,
-    width: 300,
+    width: 400,
   },
   infoContainer: {
     flex: 1,
@@ -80,6 +81,7 @@ const styles = StyleSheet.create({
     color: "blue",
   },
   eliminarTexto: {
+    marginLeft:15,
     color: "red",
   },
 });
